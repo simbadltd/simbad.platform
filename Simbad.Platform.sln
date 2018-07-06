@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Core", "Simbad.Platform.Core\Simbad.Platform.Core.csproj", "{ACA56A07-E807-4006-BD02-C090B493F87B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Persistence", "Simbad.Platform.Persistence\Simbad.Platform.Persistence.csproj", "{4DAADAE4-32A2-46F9-AC87-44E51165DED6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Persistence.Sqlite", "Simbad.Platform.Persistence.Sqlite\Simbad.Platform.Persistence.Sqlite.csproj", "{4EDF37E7-E2E0-4113-A781-91CA2211BA0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Persistence.Sqlite.Tests", "Simbad.Platform.Persistence.Sqlite.Tests\Simbad.Platform.Persistence.Sqlite.Tests.csproj", "{8A52C260-2709-49DB-80A7-8BE22C300038}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Persistence.Tests", "Simbad.Platform.Persistence.Tests\Simbad.Platform.Persistence.Tests.csproj", "{B9CE3964-4218-4732-ACBF-88B901FC3296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Core.Tests", "Simbad.Platform.Core.Tests\Simbad.Platform.Core.Tests.csproj", "{73BCA43C-CC61-4EEE-86E5-891727C11B88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA56A07-E807-4006-BD02-C090B493F87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA56A07-E807-4006-BD02-C090B493F87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA56A07-E807-4006-BD02-C090B493F87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA56A07-E807-4006-BD02-C090B493F87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DAADAE4-32A2-46F9-AC87-44E51165DED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DAADAE4-32A2-46F9-AC87-44E51165DED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DAADAE4-32A2-46F9-AC87-44E51165DED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DAADAE4-32A2-46F9-AC87-44E51165DED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EDF37E7-E2E0-4113-A781-91CA2211BA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDF37E7-E2E0-4113-A781-91CA2211BA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDF37E7-E2E0-4113-A781-91CA2211BA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDF37E7-E2E0-4113-A781-91CA2211BA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A52C260-2709-49DB-80A7-8BE22C300038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A52C260-2709-49DB-80A7-8BE22C300038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A52C260-2709-49DB-80A7-8BE22C300038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A52C260-2709-49DB-80A7-8BE22C300038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9CE3964-4218-4732-ACBF-88B901FC3296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9CE3964-4218-4732-ACBF-88B901FC3296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9CE3964-4218-4732-ACBF-88B901FC3296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9CE3964-4218-4732-ACBF-88B901FC3296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
