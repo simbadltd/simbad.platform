@@ -11,19 +11,19 @@ namespace Simbad.Platform.Core
     {
         private const string EventDispatcherParameterName = "Simbad.Platform.Core.EventDispatcher";
 
-        private static readonly Dictionary<string, object> Parameters = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> _parameters = new Dictionary<string, object>();
 
         private static IServiceResolver _serviceResolver = new SimpleParameterlessCtorServiceResolver();
 
         public static T Parameter<T>(string name)
         {
-            if (Parameters.ContainsKey(name) == false)
+            if (_parameters.ContainsKey(name) == false)
             {
                 throw new ArgumentException(
                     $"Cannot found parameter with name <{name}>. Please, ensure that this parameter is initialized before this call.");
             }
 
-            return (T) Parameters[name];
+            return (T) _parameters[name];
         }
 
         public static Configuration Configure()
@@ -51,12 +51,12 @@ namespace Simbad.Platform.Core
         {
             public void SetParameter(string name, object value)
             {
-                Parameters[name] = value;
+                _parameters[name] = value;
             }
 
-            public Configuration RegisterIdGenertor<TId>(Func<object> idGenerator)
+            public Configuration RegisterIdGenertor(Func<Guid> idGenerator)
             {
-                IdGenerator.RegisterIdGenertor<TId>(idGenerator);
+                IdGenerator.RegisterIdGenertor(idGenerator);
 
                 return this;
             }

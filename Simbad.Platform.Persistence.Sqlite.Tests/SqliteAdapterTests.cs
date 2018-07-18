@@ -9,28 +9,27 @@ namespace Simbad.Platform.Persistence.Sqlite.Tests
 {
     public class SqliteAdapterTests
     {
-        private readonly Repository<TestEntity, Guid> _repository;
-        private readonly IUnitOfWork<Guid> _unitOfWork;
+        private readonly Repository<TestBusinessObject> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public SqliteAdapterTests()
         {
             Global.Configure()
-                .RegisterIdGenertor<Guid>(() => Guid.NewGuid())
                 .UseSqlitePersistence(".\\test.s3db")
                 .UseEventDispatcherStub()
-                .UseEntityConverterFactory<TestEntityConverterFactory>();
+                .UseConverter<TestConverter>();
 
-            EntityMapping.Configure().Add<TestEntity, TestDao, Guid>();
+            Mapping.Configure().Add<TestBusinessObject, TestDao>();
 
-            _unitOfWork = new UnitOfWork<Guid>();
-            _repository = new Repository<TestEntity, Guid>(_unitOfWork);
+            _unitOfWork = new UnitOfWork();
+            _repository = new Repository<TestBusinessObject>(_unitOfWork);
         }
 
         [Fact]
         public void ShouldSave()
         {
             // Arrange
-            var entity = new TestEntity();
+            var entity = new TestBusinessObject();
 
             // Act
             _repository.Save(entity);
@@ -41,10 +40,10 @@ namespace Simbad.Platform.Persistence.Sqlite.Tests
         public void ShouldLoad()
         {
             // Arrange
-            const string testString = "TEST";
-            var entity = new TestEntity
+            const string TestString = "TEST";
+            var entity = new TestBusinessObject
             {
-                TestProperty = testString
+                TestProperty = TestString
             };
 
             _repository.Save(entity);
@@ -55,7 +54,7 @@ namespace Simbad.Platform.Persistence.Sqlite.Tests
 
             // Assert
             Assert.Equal(entity.Id, entityFromStorage.Id);
-            Assert.Equal(entity.TestProperty, testString);
+            Assert.Equal(entity.TestProperty, TestString);
         }
     }
 }

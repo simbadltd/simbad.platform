@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Simbad.Platform.Core.Events;
 using Simbad.Platform.Core.Substance.IdGeneration;
 
 namespace Simbad.Platform.Core.Substance
 {
-    public abstract class Entity<TId> : IEventsHolder<TId>
+    public abstract class BusinessObject : IEventsHolder
     {
         private readonly List<IEvent> _events;
 
-        public TId Id { get; set; }
+        public Guid Id { get; set; }
 
-        protected Entity()
+        protected BusinessObject()
         {
-            Id = IdGenerator.NewId<TId>();
+            Id = IdGenerator.NewId();
             _events = new List<IEvent>();
         }
 

@@ -9,31 +9,31 @@ using Simbad.Platform.Core.Substance.Registration;
 
 namespace Simbad.Platform.Persistence
 {
-    public sealed class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : Entity<TId>
+    public sealed class Repository<TBusinessObject> : IRepository<TBusinessObject> where TBusinessObject : BusinessObject
     {
-        private const string Dao2EntityMethodName = "Dao2Entity";
+        private const string Dao2BusinessObjectMethodName = "Dao2BusinessObject";
         
-        private const string Entity2DaoMethodName = "Entity2Dao";
+        private const string BusinessObject2DaoMethodName = "BusinessObject2Dao";
 
-        private static Type DaoType => EntityMapping.DaoTypeFor(typeof(TEntity));
+        private static Type DaoType => Mapping.DaoTypeFor(typeof(TBusinessObject));
 
         private readonly object _syncRoot = new object();
 
-        private readonly Dictionary<TId, TEntity> _cache = new Dictionary<TId, TEntity>();
+        private readonly Dictionary<Guid, TBusinessObject> _cache = new Dictionary<Guid, TBusinessObject>();
 
         private readonly IStorageAdapter _storageAdapter;
 
-        private readonly IUnitOfWork<TId> _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         private bool _allFetched;
 
-        public Repository(IUnitOfWork<TId> unitOfWork)
+        public Repository(IUnitOfWork unitOfWork)
         {
             _storageAdapter = GlobalConfigurationExtension.ResolveStorageAdapter();
             _unitOfWork = unitOfWork;
         }
 
-        public TEntity Get(TId id)
+        public TBusinessObject Get(Guid id)
         {
             lock (_syncRoot)
             {
@@ -43,14 +43,14 @@ namespace Simbad.Platform.Persistence
                     {
                         var model = _storageAdapter.Transaction(tw => tw.Fetch(guid, DaoType));
                         var converter = CreateConverter();
-                        var result = converter.Dao2Entity<TEntity>(model);
+                        var result = converter.Dao2BusinessObject<TBusinessObject>(model);
 
                         return result;
                     });
             }
         }
 
-        public IReadOnlyCollection<TEntity> GetAll()
+        public IReadOnlyCollection<TBusinessObject> GetAll()
         {
             lock (_syncRoot)
             {
@@ -59,11 +59,10 @@ namespace Simbad.Platform.Persistence
                     return _cache.Values.ToList();
                 }
 
-                var all = _storageAdapter.Transaction(t =>
-                    t.InvokeGenericMethod<ICollection<Dao<TId>>>(typeof(TId), nameof(t.FetchAll), DaoType));
+                var all = _storageAdapter.Transaction(t => t.FetchAll(DaoType));
 
                 var converter = CreateConverter();
-                var result = all.Select(x => converter.Dao2Entity<TEntity>(x)).ToList();
+                var result = all.Select(x => converter.Dao2BusinessObject<TBusinessObject>(x)).ToList();
 
                 RefreshCache(result);
                 _allFetched = true;
@@ -72,7 +71,7 @@ namespace Simbad.Platform.Persistence
             }
         }
 
-        public void Delete(TId id)
+        public void Delete(Guid id)
         {
             lock (_syncRoot)
             {
@@ -90,7 +89,7 @@ namespace Simbad.Platform.Persistence
             }
         }
 
-        public TEntity FindSingle(Func<TEntity, bool> predicate)
+        public TBusinessObject FindSingle(Func<TBusinessObject, bool> predicate)
         {
             lock (_syncRoot)
             {
@@ -99,7 +98,7 @@ namespace Simbad.Platform.Persistence
             }
         }
 
-        public ICollection<TEntity> FindAll(Func<TEntity, bool> predicate)
+        public ICollection<TBusinessObject> FindAll(Func<TBusinessObject, bool> predicate)
         {
             lock (_syncRoot)
             {
@@ -108,43 +107,43 @@ namespace Simbad.Platform.Persistence
             }
         }
 
-        public TEntity Clone(TEntity entity)
+        public TBusinessObject Clone(TBusinessObject source)
         {
             var converter = CreateConverter();
 
-            var dao = converter.InvokeGenericMethod(DaoType, Entity2DaoMethodName, entity);
-            var clone = converter.InvokeGenericMethod(typeof(TEntity), Dao2EntityMethodName, dao) as TEntity;
+            var dao = converter.InvokeGenericMethod(DaoType, BusinessObject2DaoMethodName, source);
+            var clone = converter.InvokeGenericMethod(typeof(TBusinessObject), Dao2BusinessObjectMethodName, dao) as TBusinessObject;
 
             Debug.Assert(clone != null);
-            clone.Id = IdGenerator.NewId<TId>();
+            clone.Id = IdGenerator.NewId();
 
             return clone;
         }
 
-        public void Save(TEntity entity)
+        public void Save(TBusinessObject businessObject)
         {
-            // [kk] here we can check entity consistency in the future
+            // [kk] here we can check businessObject consistency in the future
 
             lock (_syncRoot)
             {
-                var events = entity.ExtractEvents();
+                var events = businessObject.ExtractEvents();
                 _unitOfWork.TrackEvents(events);
 
                 var converter = CreateConverter();
-                var model = converter.InvokeGenericMethod(DaoType, Entity2DaoMethodName, entity);
+                var model = converter.InvokeGenericMethod(DaoType, BusinessObject2DaoMethodName, businessObject);
 
                 _unitOfWork.Save(model, DaoType);
 
-                RefreshCache(entity);
+                RefreshCache(businessObject);
             }
         }
 
-        private static IEntityConverter<TId> CreateConverter()
+        private static IConverter CreateConverter()
         {
-            return GlobalConfigurationExtension.ResolveEntityConverterFactory().Create<TId>();
+            return GlobalConfigurationExtension.ResolveConverter();
         }
 
-        private TEntity GetOrAdd(TId id, Func<TId, TEntity> factory)
+        private TBusinessObject GetOrAdd(Guid id, Func<Guid, TBusinessObject> factory)
         {
             if (_cache.ContainsKey(id))
             {
@@ -157,7 +156,7 @@ namespace Simbad.Platform.Persistence
             return result;
         }
 
-        private void RefreshCache(IEnumerable<TEntity> aggregates)
+        private void RefreshCache(IEnumerable<TBusinessObject> aggregates)
         {
             foreach (var aggregate in aggregates)
             {
@@ -165,14 +164,14 @@ namespace Simbad.Platform.Persistence
             }
         }
 
-        private void RefreshCache(TEntity aggregate)
+        private void RefreshCache(TBusinessObject aggregate)
         {
             if (aggregate == null) return;
 
             _cache[aggregate.Id] = aggregate;
         }
 
-        private void InvalidateCache(TId id)
+        private void InvalidateCache(Guid id)
         {
             if (_cache.ContainsKey(id) == false)
             {

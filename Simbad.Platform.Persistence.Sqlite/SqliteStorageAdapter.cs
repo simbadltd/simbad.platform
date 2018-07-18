@@ -10,12 +10,12 @@ namespace Simbad.Platform.Persistence.Sqlite
 {
     public sealed class SqliteStorageAdapter : IStorageAdapter
     {
-        public T Fetch<T, TId>(TId id, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>
+        public T Fetch<T>(Guid id, IDbConnection connection, IDbTransaction transaction) where T : Dao
         {
             return Fetch(id, typeof(T), connection, transaction) as T;
         }
 
-        public Dao<TId> Fetch<TId>(TId id, Type type, IDbConnection connection, IDbTransaction transaction)
+        public Dao Fetch(Guid id, Type type, IDbConnection connection, IDbTransaction transaction)
         {
             // todo [kk]: check that type is derived from PersistenceModel
 
@@ -30,22 +30,22 @@ namespace Simbad.Platform.Persistence.Sqlite
                 return null;
             }
 
-            var model = Json.Deserialize(data.Single(), type) as Dao<TId>;
+            var model = Json.Deserialize(data.Single(), type) as Dao;
             return model;
         }
 
-        public ICollection<T> Fetch<T, TId>(Func<T, bool> predicate, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>
+        public ICollection<T> Fetch<T>(Func<T, bool> predicate, IDbConnection connection, IDbTransaction transaction) where T : Dao
         {
-            var result = FetchAll<T, TId>(connection, transaction).Where(predicate).ToList();
+            var result = FetchAll<T>(connection, transaction).Where(predicate).ToList();
             return result;
         }
 
-        public ICollection<T> FetchAll<T, TId>(IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>
+        public ICollection<T> FetchAll<T>(IDbConnection connection, IDbTransaction transaction) where T : Dao
         {
-            return FetchAll<TId>(typeof(T), connection, transaction).OfType<T>().ToList();
+            return FetchAll(typeof(T), connection, transaction).OfType<T>().ToList();
         }
 
-        public ICollection<Dao<TId>> FetchAll<TId>(Type type, IDbConnection connection, IDbTransaction transaction)
+        public ICollection<Dao> FetchAll(Type type, IDbConnection connection, IDbTransaction transaction)
         {
             var tableName = GetTableName(type);
             CreateTableIfNotExists(tableName, connection, transaction);
@@ -53,7 +53,7 @@ namespace Simbad.Platform.Persistence.Sqlite
             var text = $@"SELECT [Data] FROM [{tableName}]";
             var data = ReadData(connection, transaction, text);
 
-            var models = data.Select(x => Json.Deserialize(x, type) as Dao<TId>).ToList();
+            var models = data.Select(x => Json.Deserialize(x, type) as Dao).ToList();
             return models;
         }
 
@@ -64,7 +64,7 @@ namespace Simbad.Platform.Persistence.Sqlite
                 connection.Open();
                 using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
-                    var transactionWrapper = new TransactionWrapper(connection, transaction, this);
+                    var transactionWrapper = new DefaultTransactionWrapper(connection, transaction, this);
                     action(transactionWrapper);
                     transaction.Commit();
                 }
@@ -78,7 +78,7 @@ namespace Simbad.Platform.Persistence.Sqlite
                 connection.Open();
                 using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
-                    var transactionWrapper = new TransactionWrapper(connection, transaction, this);
+                    var transactionWrapper = new DefaultTransactionWrapper(connection, transaction, this);
                     var result = action(transactionWrapper);
                     transaction.Commit();
 
@@ -87,14 +87,14 @@ namespace Simbad.Platform.Persistence.Sqlite
             }
         }
 
-        public void Save<T, TId>(T model, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>
+        public void Save<T>(T model, IDbConnection connection, IDbTransaction transaction) where T : Dao
         {
             Save(model, typeof(T), connection, transaction);
         }
 
-        public void Save<TId>(Dao<TId> model, Type type, IDbConnection connection, IDbTransaction transaction)
+        public void Save(Dao model, Type type, IDbConnection connection, IDbTransaction transaction)
         {
-            // todo [kk]: check that type is derived from PersistenceModel
+            // todo [kk]: check that type is derived from Dao
 
             var tableName = GetTableName(type);
             CreateTableIfNotExists(tableName, connection, transaction);
@@ -103,12 +103,12 @@ namespace Simbad.Platform.Persistence.Sqlite
             SaveData(tableName, model.Id, data, connection, transaction);
         }
 
-        public void Delete<T, TId>(TId id, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>
+        public void Delete<T>(Guid id, IDbConnection connection, IDbTransaction transaction) where T : Dao
         {
             Delete(id, typeof(T), connection, transaction);
         }
 
-        public void Delete<TId>(TId id, Type type, IDbConnection connection, IDbTransaction transaction)
+        public void Delete(Guid id, Type type, IDbConnection connection, IDbTransaction transaction)
         {
             var tableName = GetTableName(type);
             CreateTableIfNotExists(tableName, connection, transaction);
@@ -132,7 +132,7 @@ namespace Simbad.Platform.Persistence.Sqlite
             return tableName;
         }
 
-        private static void SaveData<TId>(string tableName, TId id, string data, IDbConnection connection,
+        private static void SaveData(string tableName, Guid id, string data, IDbConnection connection,
             IDbTransaction transaction)
         {
             var idStr = Id2Str(id);
@@ -144,9 +144,9 @@ namespace Simbad.Platform.Persistence.Sqlite
             ExecuteNonQuery(connection, transaction, insertOrIgnoreText, ("id", idStr), ("data", data));
         }
 
-        private static string Id2Str<TId>(TId id)
+        private static string Id2Str(Guid id)
         {
-            return id.ToString();
+            return id.ToString("D");
         }
 
         private static void CreateTableIfNotExists(string tableName, IDbConnection connection, IDbTransaction transaction)
@@ -157,7 +157,7 @@ namespace Simbad.Platform.Persistence.Sqlite
             ExecuteNonQuery(connection, transaction, text);
         }
 
-        private static  SQLiteConnection CreateConnection()
+        private static SQLiteConnection CreateConnection()
         {
             var dbFilePath = Global.Parameter<string>(GlobalConfigurationExtension.DbPathParameterName);
             if (!File.Exists(dbFilePath))

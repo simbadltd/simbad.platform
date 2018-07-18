@@ -1,7 +1,9 @@
-﻿namespace Simbad.Platform.Persistence
+﻿using System;
+
+namespace Simbad.Platform.Persistence
 {
-    public abstract class Dao<TId>
+    public abstract class Dao
     {
-        public TId Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

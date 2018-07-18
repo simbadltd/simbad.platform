@@ -75,37 +75,6 @@ namespace Simbad.Platform.Core
             return types.Where(t => typeSelector(t.GetTypeInfo()) && predicate(t.GetTypeInfo())).ToList();
         }
 
-        public static string GetPropertyName<TEntity, TProperty>(this Expression<Func<TEntity, TProperty>> expression)
-        {
-            var propertyName = GetPropertyInfo(expression).Name;
-
-            return propertyName;
-        }
-
-        public static PropertyInfo GetPropertyInfo<TEntity, TProperty>(this Expression<Func<TEntity, TProperty>> expression)
-        {
-            if (expression == null)
-                throw new ArgumentNullException(nameof(expression));
-
-            MemberExpression memberExpression;
-            if (ExpressionType.Convert == expression.Body.NodeType)
-            {
-                var body = (UnaryExpression)expression.Body;
-                memberExpression = body.Operand as MemberExpression;
-            }
-            else
-            {
-                memberExpression = expression.Body as MemberExpression;
-            }
-
-            if (memberExpression == null)
-            {
-                throw new InvalidOperationException("Unexpected lambda expression, should be a property getter call.");
-            }
-
-            return (PropertyInfo)memberExpression.Member;
-        }
-
         public static bool IsDerivedFrom(this Type type, Type superType)
         {
             if (type == null)

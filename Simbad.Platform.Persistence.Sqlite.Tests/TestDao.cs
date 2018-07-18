@@ -7,7 +7,7 @@ using Simbad.Platform.Core.Events;
 
 namespace Simbad.Platform.Persistence.Sqlite.Tests
 {
-    public sealed class TestDao : Dao<Guid>
+    public sealed class TestDao : Dao
     {
         public string TestProperty { get; set; }
     }

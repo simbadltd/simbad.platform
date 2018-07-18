@@ -6,27 +6,27 @@ namespace Simbad.Platform.Persistence
 {
     public interface IStorageAdapter
     {
-        T Fetch<T, TId>(TId id, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>;
+        T Fetch<T>(Guid id, IDbConnection connection, IDbTransaction transaction) where T : Dao;
 
-        Dao<TId> Fetch<TId>(TId id, Type type, IDbConnection connection, IDbTransaction transaction);
+        Dao Fetch(Guid id, Type type, IDbConnection connection, IDbTransaction transaction);
 
-        ICollection<T> Fetch<T, TId>(Func<T, bool> predicate, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>;
+        ICollection<T> Fetch<T>(Func<T, bool> predicate, IDbConnection connection, IDbTransaction transaction) where T : Dao;
 
-        ICollection<T> FetchAll<T, TId>(IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>;
+        ICollection<T> FetchAll<T>(IDbConnection connection, IDbTransaction transaction) where T : Dao;
 
-        ICollection<Dao<TId>> FetchAll<TId>(Type type, IDbConnection connection, IDbTransaction transaction);
+        ICollection<Dao> FetchAll(Type type, IDbConnection connection, IDbTransaction transaction);
 
         void Transaction(Action<ITransactionWrapper> action);
 
         TResult Transaction<TResult>(Func<ITransactionWrapper, TResult> action);
 
-        void Save<T, TId>(T model, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>;
+        void Save<T>(T dao, IDbConnection connection, IDbTransaction transaction) where T : Dao;
 
-        void Save<TId>(Dao<TId> model, Type type, IDbConnection connection, IDbTransaction transaction);
+        void Save(Dao dao, Type type, IDbConnection connection, IDbTransaction transaction);
 
-        void Delete<T, TId>(TId id, IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>;
+        void Delete<T>(Guid id, IDbConnection connection, IDbTransaction transaction) where T : Dao;
 
-        void Delete<TId>(TId id, Type type, IDbConnection connection, IDbTransaction transaction);
+        void Delete(Guid id, Type type, IDbConnection connection, IDbTransaction transaction);
 
         void DeleteAll(Type type, IDbConnection connection, IDbTransaction transaction);
     }

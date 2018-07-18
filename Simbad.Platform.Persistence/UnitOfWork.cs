@@ -8,7 +8,7 @@ using Simbad.Platform.Core.Substance.Registration;
 
 namespace Simbad.Platform.Persistence
 {
-    public sealed class UnitOfWork<TId> : IUnitOfWork<TId>
+    public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly ICollection<UowAction> _actions = new List<UowAction>();
 
@@ -75,20 +75,20 @@ namespace Simbad.Platform.Persistence
             switch (action.ActionType)
             {
                 case UowActionType.Save:
-                    transaction.Save(action.Model, action.EntityType);
+                    transaction.Save(action.Dao, action.BusinessObjectType);
                     break;
                 case UowActionType.DeleteAll:
-                    transaction.DeleteAll(action.EntityType);
+                    transaction.DeleteAll(action.BusinessObjectType);
                     break;
                 case UowActionType.Delete:
-                    transaction.Delete(action.Id, action.EntityType);
+                    transaction.Delete(action.Id, action.BusinessObjectType);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public void Save(object model, Type type)
+        public void Save(object dao, Type type)
         {
             // todo [kk]: check that type is derived from PersistenceModel
 
@@ -97,20 +97,20 @@ namespace Simbad.Platform.Persistence
                 _actions.Add(new UowAction
                 {
                     ActionType = UowActionType.Save,
-                    Model = model as Dao<TId>,
-                    EntityType = type,
+                    Dao = dao as Dao,
+                    BusinessObjectType = type,
                 });
             }
         }
 
-        public void Delete(TId id, Type type)
+        public void Delete(Guid id, Type type)
         {
             lock (_syncRoot)
             {
                 _actions.Add(new UowAction
                 {
                     ActionType = UowActionType.Delete,
-                    EntityType = type,
+                    BusinessObjectType = type,
                     Id = id,
                 });
             }
@@ -123,7 +123,7 @@ namespace Simbad.Platform.Persistence
                 _actions.Add(new UowAction
                 {
                     ActionType = UowActionType.DeleteAll,
-                    EntityType = type,
+                    BusinessObjectType = type,
                 });
             }
         }
@@ -137,13 +137,13 @@ namespace Simbad.Platform.Persistence
 
         private sealed class UowAction
         {
-            public Dao<TId> Model { get; set; }
+            public Dao Dao { get; set; }
 
             public UowActionType ActionType { get; set; }
 
-            public Type EntityType { get; set; }
+            public Type BusinessObjectType { get; set; }
 
-            public TId Id { get; set; }
+            public Guid Id { get; set; }
         }
     }
 }

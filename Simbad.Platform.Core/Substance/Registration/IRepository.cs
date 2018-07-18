@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 namespace Simbad.Platform.Core.Substance.Registration
 {
-    public interface IRepository<TEntity, in TId> where TEntity : Entity<TId>
+    public interface IRepository<TBusinessObject> where TBusinessObject : BusinessObject
     {
-        TEntity Get(TId id);
+        TBusinessObject Get(Guid id);
 
-        IReadOnlyCollection<TEntity> GetAll();
+        IReadOnlyCollection<TBusinessObject> GetAll();
 
-        void Delete(TId id);
+        void Delete(Guid id);
 
         void DeleteAll();
 
-        void Save(TEntity aggregate);
+        void Save(TBusinessObject businessObject);
 
-        TEntity FindSingle(Func<TEntity, bool> predicate);
+        TBusinessObject FindSingle(Func<TBusinessObject, bool> predicate);
 
-        ICollection<TEntity> FindAll(Func<TEntity, bool> predicate);
+        ICollection<TBusinessObject> FindAll(Func<TBusinessObject, bool> predicate);
 
-        TEntity Clone(TEntity aggregate);
+        TBusinessObject Clone(TBusinessObject source);
     }
 }

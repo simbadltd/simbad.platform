@@ -6,16 +6,16 @@ using Xunit;
 
 namespace Simbad.Platform.Persistence.Tests
 {
-    public sealed class TestEntityConverter : IEntityConverter<Guid>
+    public sealed class TestConverter : IConverter
     {
-        public TDao Entity2Dao<TDao>(Entity<Guid> entity) where TDao : Dao<Guid>
+        public TDao BusinessObject2Dao<TDao>(BusinessObject businessObject) where TDao : Dao
         {
-            return Map<Entity<Guid>, TDao>(entity);
+            return Map<BusinessObject, TDao>(businessObject);
         }
 
-        public TEntity Dao2Entity<TEntity>(Dao<Guid> dao) where TEntity : Entity<Guid>
+        public TBusinessObject Dao2BusinessObject<TBusinessObject>(Dao dao) where TBusinessObject : BusinessObject
         {
-            return Map<Dao<Guid>, TEntity>(dao);
+            return Map<Dao, TBusinessObject>(dao);
         }
 
         private static TDest Map<TSrc, TDest>(TSrc src)

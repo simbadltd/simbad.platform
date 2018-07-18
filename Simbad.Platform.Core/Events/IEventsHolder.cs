@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Simbad.Platform.Core.Events
 {
-    internal interface IEventsHolder<out TId>
+    internal interface IEventsHolder
     {
-        TId Id { get; }
+        Guid Id { get; }
 
         ICollection<IEvent> ExtractEvents();
     }

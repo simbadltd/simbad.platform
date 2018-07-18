@@ -4,15 +4,15 @@ using Simbad.Platform.Core.Events;
 
 namespace Simbad.Platform.Core.Substance.Registration
 {
-    public interface IUnitOfWork<in TId>
+    public interface IUnitOfWork
     {
         void Commit();
         
         void TrackEvents(ICollection<IEvent> events);
         
-        void Save(object model, Type type);
+        void Save(object dao, Type type);
         
-        void Delete(TId id, Type type);
+        void Delete(Guid id, Type type);
         
         void DeleteAll(Type type);
     }

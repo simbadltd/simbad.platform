@@ -6,21 +6,21 @@ namespace Simbad.Platform.Persistence
 {
     public interface ITransactionWrapper
     {
-        T Fetch<T, TId>(TId id) where T : Dao<TId>;
+        T Fetch<T>(Guid id) where T : Dao;
 
-        Dao<TId> Fetch<TId>(TId id, Type type);
+        Dao Fetch(Guid id, Type type);
 
-        ICollection<T> Fetch<T, TId>(Func<T, bool> predicate) where T : Dao<TId>;
+        ICollection<T> Fetch<T>(Func<T, bool> predicate) where T : Dao;
 
-        ICollection<T> FetchAll<T, TId>(IDbConnection connection, IDbTransaction transaction) where T : Dao<TId>;
+        ICollection<T> FetchAll<T>(IDbConnection connection, IDbTransaction transaction) where T : Dao;
 
-        ICollection<Dao<TId>> FetchAll<TId>(Type type);
+        ICollection<Dao> FetchAll(Type type);
 
-        void Save<TId>(Dao<TId> model, Type type);
+        void Save(Dao dao, Type type);
 
-        void Delete<T, TId>(TId id) where T : Dao<TId>;
+        void Delete<T>(Guid id) where T : Dao;
 
-        void Delete<TId>(TId id, Type type);
+        void Delete(Guid id, Type type);
 
         void DeleteAll(Type type);
     }

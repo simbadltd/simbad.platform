@@ -5,32 +5,16 @@ namespace Simbad.Platform.Core.Substance.IdGeneration
 {
     public static class IdGenerator
     {
-        private static readonly Dictionary<Type, Func<object>> Generators = new Dictionary<Type, Func<object>>();
+        private static Func<Guid> _generator = Guid.NewGuid;
 
-        public static TId NewId<TId>()
+        public static Guid NewId()
         {
-            var idType = typeof(TId);
-
-            if (Generators.ContainsKey(idType) == false)
-            {
-                throw new InvalidOperationException(
-                    $"There is no id generator for <{idType}>. Please, register id generator with <{nameof(RegisterIdGenertor)}>");
-            }
-
-            var result = (TId) Generators[idType]();
-            return result;
+            return _generator();
         }
 
-        internal static void RegisterIdGenertor<TId>(Func<object> idGenerator)
+        internal static void RegisterIdGenertor(Func<Guid> idGenerator)
         {
-            var idType = typeof(TId);
-
-            if (Generators.ContainsKey(idType))
-            {
-                throw new InvalidOperationException($"We already have id generator for <{idType}>");
-            }
-
-            Generators[idType] = idGenerator;
+            _generator = idGenerator;
         }
     }
 }
