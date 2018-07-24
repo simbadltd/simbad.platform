@@ -1,0 +1,1 @@
+dotnet pack .\Simbad.Platform.Persistence.Sqlite.csproj --configuration Release --output ..\artifacts

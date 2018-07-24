@@ -1,0 +1,1 @@
+dotnet pack .\Simbad.Platform.Core.csproj --configuration Release --output ..\artifacts

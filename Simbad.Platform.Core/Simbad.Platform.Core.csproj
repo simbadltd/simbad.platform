@@ -2,4 +2,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Simbad.Platform.Core</Title>
+    <Version>1.0.0</Version>
+    <Authors>Konstantin Kryzhanovskii</Authors>
+    <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package contains main abstractions and provides core functionality to get started with your project.</Description>
+    <Summary>Platform for rapid construction of applications (including prototypes and MVPs). This package contains main abstractions and provides core functionality to get started with your project.</Summary>
+    <PackageProjectUrl>https://github.com/simbadltd/simbad.platform</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/simbadltd/simbad.platform</RepositoryUrl>
+  </PropertyGroup>
 </Project>
