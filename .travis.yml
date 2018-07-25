@@ -1,0 +1,8 @@
+language: csharp
+mono: none
+dotnet: 2.1.0
+install:
+  - nuget install xunit.runners -Version 2.0.0 -OutputDirectory testrunner
+script:
+ - dotnet restore
+ - xbuild /p:Configuration=Release Simbad.Platform.sln
