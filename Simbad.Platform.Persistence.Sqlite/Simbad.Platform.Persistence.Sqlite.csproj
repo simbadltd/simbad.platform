@@ -13,10 +13,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/simbadltd/simbad.platform/master/Icon.png</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simbad.Platform.Persistence\Simbad.Platform.Persistence.csproj" />
+    <PackageReference Include="Simbad.Platform.Core" Version="1.0.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
+    <ProjectReference Include="..\Simbad.Platform.Persistence\Simbad.Platform.Persistence.csproj" />
   </ItemGroup>
 </Project>

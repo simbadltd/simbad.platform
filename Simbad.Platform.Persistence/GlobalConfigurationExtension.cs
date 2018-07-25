@@ -38,5 +38,12 @@ namespace Simbad.Platform.Persistence
 
             return configuration;
         }
+        
+        public static Global.Configuration UseInMemoryPersistence(this Global.Configuration configuration)
+        {
+            configuration.UseStorageAdapter<InMemoryStorageAdapter>();
+
+            return configuration;
+        }        
     }
 }

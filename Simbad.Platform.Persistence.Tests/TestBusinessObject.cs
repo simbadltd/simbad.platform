@@ -1,7 +1,6 @@
-using System;
 using Simbad.Platform.Core.Substance;
 
-namespace Simbad.Platform.Persistence.Sqlite.Tests
+namespace Simbad.Platform.Persistence.Tests
 {
     public sealed class TestBusinessObject : BusinessObject
     {

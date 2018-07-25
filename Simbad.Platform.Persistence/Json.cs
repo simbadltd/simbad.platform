@@ -1,9 +1,9 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Simbad.Platform.Persistence.Sqlite
+namespace Simbad.Platform.Persistence
 {
-    internal static class Json
+    public static class Json
     {
         public static T Deserialize<T>(string data)
         {

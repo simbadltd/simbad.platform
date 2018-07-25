@@ -20,6 +20,11 @@ namespace Simbad.Platform.Persistence.Tests
 
         private static TDest Map<TSrc, TDest>(TSrc src)
         {
+            if (src == null)
+            {
+                return default(TDest);
+            }
+            
             var dest = Activator.CreateInstance<TDest>();
 
             var srcProps = src.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);

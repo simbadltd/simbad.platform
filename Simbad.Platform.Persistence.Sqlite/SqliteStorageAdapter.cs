@@ -128,7 +128,7 @@ namespace Simbad.Platform.Persistence.Sqlite
 
         private static string GetTableName(Type type)
         {
-            var tableName = type.Name;
+            var tableName = string.Concat(type.Namespace, ".", type.Name);
             return tableName;
         }
 
