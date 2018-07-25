@@ -8,8 +8,9 @@
     <Version>1.0.0</Version>
     <Authors>Konstantin Kryzhanovskii</Authors>
     <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package contains main abstractions and provides core functionality to get started with your project.</Description>
-    <Summary>Platform for rapid construction of applications (including prototypes and MVPs). This package contains main abstractions and provides core functionality to get started with your project.</Summary>
+    <PackageLicenseUrl>https://github.com/simbadltd/simbad.platform/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/simbadltd/simbad.platform</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simbadltd/simbad.platform</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/simbadltd/simbad.platform/master/Icon.png</PackageIconUrl>
   </PropertyGroup>
 </Project>
