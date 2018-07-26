@@ -19,10 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="sqlite\win\x86\sqlite3.dll" />
-    <None Remove="sqlite\x64\sqlite3.dll" />
-    <None Remove="sqlite\x86\sqlite3.dll" />
     <EmbeddedResource Include="sqlite\win\x64\sqlite3.dll" />
-    <None Remove="sqlite\linux\sqlite3.so" />
     <EmbeddedResource Include="sqlite\linux\sqlite3.so" />
   </ItemGroup>
 </Project>
