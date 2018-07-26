@@ -13,6 +13,10 @@ namespace Simbad.Platform.Persistence.Sqlite
             var assembly = Assembly.GetExecutingAssembly();
             var libraryName = GetLibraryName();
 
+            if (libraryName == null)
+            {
+                return;
+            }
 
             var path = Path.Combine(Path.GetDirectoryName(assembly.Location), libraryName);
 
@@ -43,33 +47,23 @@ namespace Simbad.Platform.Persistence.Sqlite
 
         private static string GetLibraryName()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return "sqlite3.so";
-            }
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return "sqlite3.dll";
             }
 
-            throw new NotSupportedException("Only Windows and Linux supported");
+            return null;
         }
 
         private static string GetResourceName()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return "Simbad.Platform.Persistence.Sqlite.sqlite.linux.sqlite3.so";
-            }
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var suffix = IntPtr.Size == 8 ? "x64" : "x86";
                 return $"Simbad.Platform.Persistence.Sqlite.sqlite.win.{suffix}.sqlite3.dll";
             }
 
-            throw new NotSupportedException("Only Windows and Linux supported");
+            return null;
         }
     }
 }
