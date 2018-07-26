@@ -9,7 +9,7 @@
     <Title>Simbad.Platform.Persistence</Title>
     <Version>1.0.1</Version>
     <Authors>Konstantin Kryzhanovskii</Authors>
-    <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package provides functionality and abstractions to get started with persistence for your project.</Description>
+    <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package provides functionality and abstractions to get started with persistence for your project. Also the package includes simple persistence based on the in-memory storage.</Description>
     <PackageLicenseUrl>https://github.com/simbadltd/simbad.platform/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/simbadltd/simbad.platform</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simbadltd/simbad.platform</RepositoryUrl>
