@@ -4,9 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <Title>Simbad.Platform.Persistence.Sqlite</Title>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Konstantin Kryzhanovskii</Authors>
-    <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package provides simple and reliable persistence based on SQLite storage engine. Using it, you can get started with persistence in a minutes.</Description>
+    <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package provides simple and reliable persistence based on SQLite storage engine. Using it, you can get started with persistence in a minutes. Package designed to work on any Windows or Linux platforms out-of-the-box, there is no need in additional references for sqlite3 library.</Description>
     <PackageLicenseUrl>https://github.com/simbadltd/simbad.platform/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/simbadltd/simbad.platform</PackageProjectUrl>
     <RepositoryUrl>https://github.com/simbadltd/simbad.platform</RepositoryUrl>
@@ -16,5 +16,13 @@
     <PackageReference Include="Mono.Data.Sqlite.Portable" Version="1.0.3.5" />
     <PackageReference Include="Simbad.Platform.Core" Version="1.0.1" />
     <PackageReference Include="Simbad.Platform.Persistence" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="sqlite\win\x86\sqlite3.dll" />
+    <None Remove="sqlite\x64\sqlite3.dll" />
+    <None Remove="sqlite\x86\sqlite3.dll" />
+    <EmbeddedResource Include="sqlite\win\x64\sqlite3.dll" />
+    <None Remove="sqlite\linux\sqlite3.so" />
+    <EmbeddedResource Include="sqlite\linux\sqlite3.so" />
   </ItemGroup>
 </Project>

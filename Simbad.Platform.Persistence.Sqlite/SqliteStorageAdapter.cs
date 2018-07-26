@@ -10,6 +10,11 @@ namespace Simbad.Platform.Persistence.Sqlite
 {
     public sealed class SqliteStorageAdapter : IStorageAdapter
     {
+        static SqliteStorageAdapter()
+        {
+            Bootstrap.LoadSqliteDll();
+        }
+        
         public T Fetch<T>(Guid id, IDbConnection connection, IDbTransaction transaction) where T : Dao
         {
             return Fetch(id, typeof(T), connection, transaction) as T;
