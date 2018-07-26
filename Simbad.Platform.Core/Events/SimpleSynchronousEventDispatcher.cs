@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Simbad.Platform.Core.Events
 {
-    public sealed class SimpleSynchronousEventDispatcher : IEventDispatcher
+    internal sealed class SimpleSynchronousEventDispatcher : IEventDispatcher
     {
         private static readonly ConcurrentDictionary<Type, MethodInfo> _cachedHandleMethods = new ConcurrentDictionary<Type, MethodInfo>();
 
