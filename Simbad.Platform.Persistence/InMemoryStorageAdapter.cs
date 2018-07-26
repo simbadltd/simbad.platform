@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Simbad.Platform.Persistence
 {
-    public sealed class InMemoryStorageAdapter : IStorageAdapter
+    internal sealed class InMemoryStorageAdapter : IStorageAdapter
     {
         private static readonly ConcurrentDictionary<string, object> _locks = new ConcurrentDictionary<string, object>();
 

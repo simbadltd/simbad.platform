@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simbad.Platform.Core.Tests\Simbad.Platform.Core.Tests.csproj" />
+    <ProjectReference Include="..\Simbad.Platform.Core\Simbad.Platform.Core.csproj" />
     <ProjectReference Include="..\Simbad.Platform.Persistence.Sqlite\Simbad.Platform.Persistence.Sqlite.csproj" />
     <ProjectReference Include="..\Simbad.Platform.Persistence.Tests\Simbad.Platform.Persistence.Tests.csproj" />
   </ItemGroup>

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Simbad.Platform.Core.Dependencies
 {
-    public sealed class SimpleParameterlessCtorServiceResolver : IServiceResolver
+    internal sealed class SimpleParameterlessCtorServiceResolver : IServiceResolver
     {
         private readonly ConcurrentBag<Type> _safeTypes = new ConcurrentBag<Type>();
 

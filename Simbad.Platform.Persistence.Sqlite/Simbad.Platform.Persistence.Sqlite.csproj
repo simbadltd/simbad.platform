@@ -13,7 +13,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/simbadltd/simbad.platform/master/Icon.png</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Simbad.Platform.Core" Version="1.0.0" />
+    <PackageReference Include="Simbad.Platform.Core" Version="1.0.1" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108" />
   </ItemGroup>
   <ItemGroup>

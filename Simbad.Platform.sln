@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Persistence
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Platform.Core.Tests", "Simbad.Platform.Core.Tests\Simbad.Platform.Core.Tests.csproj", "{73BCA43C-CC61-4EEE-86E5-891727C11B88}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{763DF59C-7140-44F6-AB7C-ABE53904059A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,10 @@ Global
 		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73BCA43C-CC61-4EEE-86E5-891727C11B88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73BCA43C-CC61-4EEE-86E5-891727C11B88} = {763DF59C-7140-44F6-AB7C-ABE53904059A}
+		{8A52C260-2709-49DB-80A7-8BE22C300038} = {763DF59C-7140-44F6-AB7C-ABE53904059A}
+		{B9CE3964-4218-4732-ACBF-88B901FC3296} = {763DF59C-7140-44F6-AB7C-ABE53904059A}
 	EndGlobalSection
 EndGlobal
