@@ -166,8 +166,11 @@ namespace Simbad.Platform.Core
             // Collection type might or might not be generic itself.
             // However, we know it implements IEnumerable<T>.
             // So, find that interface
-            var collectionInterface = type.GetTypeInfo().ImplementedInterfaces
-                .SingleOrDefault(x => x.GetTypeInfo().IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+            var possibleInterfaces = type.GetTypeInfo().ImplementedInterfaces.ToList();
+            possibleInterfaces.Add(type);
+            
+            var collectionInterface =
+                possibleInterfaces.SingleOrDefault(x => x.GetTypeInfo().IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 
             if (collectionInterface == null) return null;
 

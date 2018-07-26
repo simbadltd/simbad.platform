@@ -14,7 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Mono.Data.Sqlite.Portable" Version="1.0.3.5" />
-    <PackageReference Include="Simbad.Platform.Core" Version="1.0.1" />
+    <PackageReference Include="Simbad.Platform.Core" Version="1.0.5" />
     <PackageReference Include="Simbad.Platform.Persistence" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
 using System;
+using Simbad.Platform.Core.Dependencies;
+using Simbad.Platform.Core.Events;
 using Xunit;
 
 namespace Simbad.Platform.Core.Tests
@@ -7,7 +9,7 @@ namespace Simbad.Platform.Core.Tests
     {
         public static Global.Configuration UseEventDispatcherStub(this Global.Configuration configuration)
         {
-            configuration.UseEventDispatcher<EventDispatcherStub>();
+            Global.Ioc.Register(TypeRegistration.For<EventDispatcherStub, IEventDispatcher>());
 
             return configuration;
         }

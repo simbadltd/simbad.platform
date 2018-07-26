@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Simbad.Platform.Core.Dependencies;
@@ -9,11 +10,11 @@ namespace Simbad.Platform.Core
 {
     public static class Global
     {
-        private const string EventDispatcherParameterName = "Simbad.Platform.Core.EventDispatcher";
-
+        public const string AssemblyWildcardsPropertyName = "Simbad.Platform.Core.AssemblyWildcardsPropertyName"; 
+        
         private static readonly Dictionary<string, object> _parameters = new Dictionary<string, object>();
-
-        private static IServiceResolver _serviceResolver = new SimpleParameterlessCtorServiceResolver();
+        
+        public static readonly Ioc Ioc = new Ioc();
 
         public static T Parameter<T>(string name)
         {
@@ -26,26 +27,29 @@ namespace Simbad.Platform.Core
             return (T) _parameters[name];
         }
 
-        public static Configuration Configure()
+        /// <summary>
+        /// Entry point to configure and start using framework
+        /// </summary>
+        /// <param name="projectAssemblyNameWildcards">List of project assembly names (wildcard supported too, e.g. "Simbad.Platform.*.dll"). It is needed to
+        /// connect external logic (like event handlers etc.) with framework mechanisms (like dispatchers etc.)</param>
+        /// <returns></returns>
+        public static Configuration Configure(params string[] projectAssemblyNameWildcards)
         {
-            return new Configuration();
-        }
+            var configuration = new Configuration();
+            configuration.SetParameter(AssemblyWildcardsPropertyName, projectAssemblyNameWildcards);
+            
+            RegisterCoreServices();
 
-        public static IEventDispatcher ResolveEventDispatcher()
+            return configuration;
+        }
+        
+        private static void RegisterCoreServices()
         {
-            return ResolveService<IEventDispatcher>(Parameter<Type>(EventDispatcherParameterName));
-        }
-
-        public static T ResolveService<T>(Type type) where T : class
-        {
-            if (_serviceResolver == null)
-            {
-                throw new InvalidOperationException(
-                    $"There is no service resolver registered. Please, setup it with <{nameof(Configuration.ResolveServiceUsing)}> method call.");
-            }
-
-            return _serviceResolver.Resolve<T>(type);
-        }
+            Ioc.RegisterSingle(TypeRegistration.For<SimpleSynchronousEventDispatcher, IEventDispatcher>(Lifetime.PerLifetimeScope));
+            Ioc.RegisterAllTypesDerivedFrom(
+                typeof(IEventHandler<>),
+                implementationType => TypeRegistration.AsImplementedInterfaces(implementationType, Lifetime.PerLifetimeScope));
+        }        
 
         public sealed class Configuration
         {
@@ -59,16 +63,6 @@ namespace Simbad.Platform.Core
                 IdGenerator.RegisterIdGenertor(idGenerator);
 
                 return this;
-            }
-
-            public void ResolveServiceUsing(IServiceResolver serviceResolver)
-            {
-                _serviceResolver = serviceResolver;
-            }
-
-            public void UseEventDispatcher<T>()
-            {
-                SetParameter(EventDispatcherParameterName, typeof(T));
             }
         }
     }

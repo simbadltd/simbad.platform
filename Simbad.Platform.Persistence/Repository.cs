@@ -29,7 +29,7 @@ namespace Simbad.Platform.Persistence
 
         public Repository(IUnitOfWork unitOfWork)
         {
-            _storageAdapter = GlobalConfigurationExtension.ResolveStorageAdapter();
+            _storageAdapter = Global.Ioc.Resolver.Resolve<IStorageAdapter>();
             _unitOfWork = unitOfWork;
         }
 
@@ -140,7 +140,7 @@ namespace Simbad.Platform.Persistence
 
         private static IConverter CreateConverter()
         {
-            return GlobalConfigurationExtension.ResolveConverter();
+            return Global.Ioc.Resolver.Resolve<IConverter>();
         }
 
         private TBusinessObject GetOrAdd(Guid id, Func<Guid, TBusinessObject> factory)

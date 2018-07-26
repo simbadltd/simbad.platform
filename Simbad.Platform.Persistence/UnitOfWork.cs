@@ -22,8 +22,8 @@ namespace Simbad.Platform.Persistence
 
         public UnitOfWork()
         {
-            _storageAdapter = GlobalConfigurationExtension.ResolveStorageAdapter();
-            _dispatcher = Global.ResolveEventDispatcher();
+            _storageAdapter = Global.Ioc.Resolver.Resolve<IStorageAdapter>();
+            _dispatcher = Global.Ioc.Resolver.Resolve<IEventDispatcher>();
         }
 
         public void Commit()
