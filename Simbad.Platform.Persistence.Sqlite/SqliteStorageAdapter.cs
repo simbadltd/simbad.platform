@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using Mono.Data.Sqlite;
 using Simbad.Platform.Core;
 
 namespace Simbad.Platform.Persistence.Sqlite
@@ -157,21 +157,19 @@ namespace Simbad.Platform.Persistence.Sqlite
             ExecuteNonQuery(connection, transaction, text);
         }
 
-        private static SQLiteConnection CreateConnection()
+        private static SqliteConnection CreateConnection()
         {
             var dbFilePath = Global.Parameter<string>(GlobalConfigurationExtension.DbPathParameterName);
             if (!File.Exists(dbFilePath))
             {
                 var directoryName = Path.GetDirectoryName(dbFilePath);
                 if (string.IsNullOrEmpty(directoryName) == false) Directory.CreateDirectory(directoryName);
-                SQLiteConnection.CreateFile(dbFilePath);
+                SqliteConnection.CreateFile(dbFilePath);
             }
 
-            var connection = new SQLiteConnection
+            var connection = new SqliteConnection
             {
-                ConnectionString =
-                    new SQLiteConnectionStringBuilder { DataSource = dbFilePath, ForeignKeys = true, }
-                        .ConnectionString
+                ConnectionString = new SqliteConnectionStringBuilder { DataSource = dbFilePath }.ConnectionString
             };
 
             return connection;
