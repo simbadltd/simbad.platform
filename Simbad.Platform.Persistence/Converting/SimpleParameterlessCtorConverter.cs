@@ -1,13 +1,18 @@
-using System;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Simbad.Platform.Core.Utils;
 using Simbad.Platform.Core.Substance;
-using Xunit;
+using Simbad.Platform.Persistence.Storage;
 
-namespace Simbad.Platform.Persistence.Tests
+namespace Simbad.Platform.Persistence.Converting
 {
-    public sealed class TestConverter : IConverter
+    public sealed class SimpleParameterlessCtorConverter : IConverter
     {
+        private static readonly ConcurrentBag<Type> _safeTypes = new ConcurrentBag<Type>();
+        
         public TDao BusinessObject2Dao<TDao>(BusinessObject businessObject) where TDao : Dao
         {
             return Map<BusinessObject, TDao>(businessObject);
@@ -20,6 +25,8 @@ namespace Simbad.Platform.Persistence.Tests
 
         private static TDest Map<TSrc, TDest>(TSrc src)
         {
+            EnsureTypeIsSafe(typeof(TDest));
+            
             if (src == null)
             {
                 return default(TDest);
@@ -46,5 +53,33 @@ namespace Simbad.Platform.Persistence.Tests
 
             return dest;
         }
+        
+        private static void EnsureTypeIsSafe(Type type)
+        {
+            if (_safeTypes.Contains(type))
+            {
+                return;
+            }
+
+            if (type.IsClass == false)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot create instance of type <{type}>, type is not a class.");
+            }
+
+            if (type.IsAbstract)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot create instance of type <{type}>, type is an abstract class.");
+            }
+
+            if (type.HasParameterlessCtor() == false)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot create instance of type <{type}>, type has no parameterless ctor.");
+            }
+
+            _safeTypes.Add(type);
+        }        
     }
 }

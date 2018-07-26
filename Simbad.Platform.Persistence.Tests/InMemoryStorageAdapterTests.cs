@@ -1,6 +1,8 @@
 using Simbad.Platform.Core;
 using Simbad.Platform.Core.Substance.Registration;
 using Simbad.Platform.Core.Tests;
+using Simbad.Platform.Persistence.Converting;
+using Simbad.Platform.Persistence.Transactions;
 using Xunit;
 
 namespace Simbad.Platform.Persistence.Tests
@@ -12,10 +14,7 @@ namespace Simbad.Platform.Persistence.Tests
 
         public InMemoryStorageAdapterTests()
         {
-            Global.Configure()
-                .UseInMemoryPersistence()
-                .UseEventDispatcherStub()
-                .UseConverter<TestConverter>();
+            Global.Configure().EnablePersistence(x => x.UseInMemoryStorage());
 
             Mapping.Configure().Add<TestBusinessObject, TestDao>();
 

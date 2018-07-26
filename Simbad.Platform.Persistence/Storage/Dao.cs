@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Storage
 {
     public abstract class Dao
     {

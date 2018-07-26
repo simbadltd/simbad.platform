@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.Contracts;
-using Simbad.Platform.Persistence;
+using Simbad.Platform.Persistence.Storage;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Transactions
 {
     public sealed class DefaultTransactionWrapper : ITransactionWrapper
     {

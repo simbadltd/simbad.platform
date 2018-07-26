@@ -5,8 +5,9 @@ using System.Threading;
 using Simbad.Platform.Core;
 using Simbad.Platform.Core.Events;
 using Simbad.Platform.Core.Substance.Registration;
+using Simbad.Platform.Persistence.Storage;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Transactions
 {
     public sealed class UnitOfWork : IUnitOfWork
     {

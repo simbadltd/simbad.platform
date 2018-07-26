@@ -3,8 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Simbad.Platform.Persistence.Transactions;
+using Simbad.Platform.Persistence.Utils;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Storage
 {
     internal sealed class InMemoryStorageAdapter : IStorageAdapter
     {

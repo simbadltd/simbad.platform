@@ -7,7 +7,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <Title>Simbad.Platform.Core</Title>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <Authors>Konstantin Kryzhanovskii</Authors>
     <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package contains main abstractions and provides core functionality to get started with your project.</Description>
     <PackageLicenseUrl>https://github.com/simbadltd/simbad.platform/blob/master/LICENSE</PackageLicenseUrl>

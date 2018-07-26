@@ -2,7 +2,9 @@ using System;
 using Simbad.Platform.Core;
 using Simbad.Platform.Core.Substance.Registration;
 using Simbad.Platform.Core.Tests;
+using Simbad.Platform.Persistence.Converting;
 using Simbad.Platform.Persistence.Tests;
+using Simbad.Platform.Persistence.Transactions;
 using Xunit;
 
 namespace Simbad.Platform.Persistence.Sqlite.Tests
@@ -15,9 +17,7 @@ namespace Simbad.Platform.Persistence.Sqlite.Tests
         public SqliteAdapterTests()
         {
             Global.Configure()
-                .UseSqlitePersistence(".\\test.s3db")
-                .UseEventDispatcherStub()
-                .UseConverter<TestConverter>();
+                .EnablePersistence(x => x.UseSqlite(".\\test.s3db"));
 
             Mapping.Configure().Add<TestBusinessObject, TestDao>();
 

@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using Mono.Data.Sqlite;
 using Simbad.Platform.Core;
+using Simbad.Platform.Persistence.Storage;
+using Simbad.Platform.Persistence.Transactions;
+using Simbad.Platform.Persistence.Utils;
 
 namespace Simbad.Platform.Persistence.Sqlite
 {
@@ -164,7 +167,7 @@ namespace Simbad.Platform.Persistence.Sqlite
 
         private static SqliteConnection CreateConnection()
         {
-            var dbFilePath = Global.Parameter<string>(GlobalConfigurationExtension.DbPathParameterName);
+            var dbFilePath = Global.Parameter<string>(PersistenceConfigurationExtension.DbPathParameterName);
             if (!File.Exists(dbFilePath))
             {
                 var directoryName = Path.GetDirectoryName(dbFilePath);

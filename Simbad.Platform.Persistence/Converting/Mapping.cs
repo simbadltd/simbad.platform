@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Simbad.Platform.Core.Substance;
+using Simbad.Platform.Persistence.Storage;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Converting
 {
     public static class Mapping
     {

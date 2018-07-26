@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Utils
 {
     public static class Json
     {

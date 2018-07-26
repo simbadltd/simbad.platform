@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Simbad.Platform.Persistence.Transactions;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Storage
 {
     public interface IStorageAdapter
     {

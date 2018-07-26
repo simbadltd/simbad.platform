@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Simbad.Platform.Persistence.Storage;
 
-namespace Simbad.Platform.Persistence
+namespace Simbad.Platform.Persistence.Transactions
 {
     public interface ITransactionWrapper
     {

@@ -7,7 +7,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <Title>Simbad.Platform.Persistence</Title>
-    <Version>1.0.2</Version>
+    <Version>1.0.4</Version>
     <Authors>Konstantin Kryzhanovskii</Authors>
     <Description>Platform for rapid construction of applications (including prototypes and MVPs). This package provides functionality and abstractions to get started with persistence for your project. Also the package includes simple persistence based on the in-memory storage.</Description>
     <PackageLicenseUrl>https://github.com/simbadltd/simbad.platform/blob/master/LICENSE</PackageLicenseUrl>
@@ -17,6 +17,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Simbad.Platform.Core" Version="1.0.5" />
+    <PackageReference Include="Simbad.Platform.Core" Version="1.0.6" />
   </ItemGroup>
 </Project>

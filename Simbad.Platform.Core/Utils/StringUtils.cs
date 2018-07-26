@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Simbad.Platform.Core
+namespace Simbad.Platform.Core.Utils
 {
     public static class StringUtils
     {
