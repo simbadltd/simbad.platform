@@ -24,7 +24,9 @@ Once, all nuget packages have been installed, you can start building your app. F
   {
       public static void Main (string[] args)
       {
-          Global.Configure(); // It is the simplest configuration with all default configurations, simple event-bus and without persistence functionality
+          // It is the simplest configuration with all default configurations, 
+          // simple event-bus and without persistence functionality
+          Global.Configure(); 
       }
   }
 ```
@@ -52,7 +54,7 @@ To start building business objects you just need to inherit your future object f
           Global.Configure()
               .EnablePersistence(x => x.UseInMemoryStorage());
           
-          // Add mappings between business objects and its` representation for persistence (dao)
+          // Add mappings between business objects and its representation for persistence (dao)
           Mapping.Configure()
                .Add<FooBusinessObject, FooDao>();
       }
@@ -87,7 +89,9 @@ To start building business objects you just need to inherit your future object f
   {
       public void Do()
       {
-          var unitOfWork = new UnitOfWork(); // using UnitOfWork pattern [Martin Fowler, Patterns of Enterprise Application Architecture, 184]
+          // using UnitOfWork pattern [Martin Fowler, Patterns of Enterprise 
+          // Application Architecture, 184]
+          var unitOfWork = new UnitOfWork(); 
           var repository = new Repository<FooBusinessObject>(unitOfWork);
           
           var entity = new FooBusinessObject();
