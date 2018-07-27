@@ -74,7 +74,7 @@ To start building business objects you just need to inherit your future object f
           Global.Configure()
               .EnablePersistence(x => x.UseSqlite());
           
-          // Add mappings between business objects and its` representation for persistence (dao)
+          // Add mappings between business objects and its representation for persistence (dao)
           Mapping.Configure()
                .Add<FooBusinessObject, FooDao>();
       }
@@ -89,8 +89,7 @@ To start building business objects you just need to inherit your future object f
   {
       public void Do()
       {
-          // using UnitOfWork pattern [Martin Fowler, Patterns of Enterprise 
-          // Application Architecture, 184]
+          // using UnitOfWork pattern [Martin Fowler, Patterns of Enterprise Application Architecture, 184]
           var unitOfWork = new UnitOfWork(); 
           var repository = new Repository<FooBusinessObject>(unitOfWork);
           
